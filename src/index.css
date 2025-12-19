@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap');
+/* Using Trebuchet MS and DM Sans fonts throughout */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -71,11 +72,12 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: 'Trebuchet MS', 'DM Sans', sans-serif !important;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Trebuchet MS', 'DM Sans', sans-serif !important;
     font-weight: 400;
   }
 
@@ -83,7 +85,7 @@
   h2,
   h3,
   h4 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Trebuchet MS', 'DM Sans', sans-serif !important;
     font-weight: 500;
   }
 }
