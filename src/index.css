@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Förena Palette - Nordique, Cérulé, Sagace, Turquin */
+    --nordique: 195 30% 95%;
+    --cerule: 197 62% 72%;
+    --sagace: 38 45% 91%;
+    --turquin: 216 54% 22%;
+
+    /* Design System Tokens */
+    --background: 195 30% 97%;
+    --foreground: 216 54% 22%;
+    --card: 195 25% 98%;
+    --card-foreground: 216 54% 22%;
+    --popover: 195 25% 98%;
+    --popover-foreground: 216 54% 22%;
+    --primary: 197 62% 72%;
+    --primary-foreground: 216 54% 22%;
+    --secondary: 38 45% 91%;
+    --secondary-foreground: 216 54% 22%;
+    --muted: 195 20% 92%;
+    --muted-foreground: 216 30% 40%;
+    --accent: 197 62% 65%;
+    --accent-foreground: 216 54% 22%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 195 30% 97%;
+    --border: 197 25% 85%;
+    --input: 197 25% 85%;
+    --ring: 197 62% 72%;
+    --radius: 0.5rem;
+
+    /* Glass morphism */
+    --glass-bg: 197 62% 72% / 0.08;
+    --glass-border: 195 30% 95% / 0.4;
+    --glass-shadow: 0 8px 32px 0 rgba(29, 53, 87, 0.06);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--cerule)) 0%, hsl(var(--nordique)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--sagace)) 0%, hsl(var(--cerule)) 100%);
+    --gradient-dark: linear-gradient(135deg, hsl(var(--turquin)) 0%, hsl(216 54% 16%) 100%);
+  }
+
+  .dark {
+    --background: 216 54% 22%;
+    --foreground: 195 30% 95%;
+    --card: 216 50% 18%;
+    --card-foreground: 195 30% 95%;
+    --popover: 216 50% 18%;
+    --popover-foreground: 195 30% 95%;
+    --primary: 197 62% 72%;
+    --primary-foreground: 216 54% 22%;
+    --secondary: 38 45% 91%;
+    --secondary-foreground: 216 54% 22%;
+    --muted: 216 40% 25%;
+    --muted-foreground: 195 20% 70%;
+    --accent: 197 62% 72%;
+    --accent-foreground: 216 54% 22%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 195 30% 95%;
+    --border: 216 40% 25%;
+    --input: 216 40% 25%;
+    --ring: 197 62% 72%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+  }
+}
+
+@layer components {
+
+  /* Glass morphism card */
+  .glass-card {
+    @apply relative overflow-hidden;
+    background: linear-gradient(135deg, rgba(142, 202, 230, 0.08) 0%, rgba(245, 230, 211, 0.06) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(142, 202, 230, 0.15);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-card-strong {
+    @apply relative overflow-hidden;
+    background: linear-gradient(135deg, rgba(232, 244, 248, 0.8) 0%, rgba(245, 230, 211, 0.15) 100%);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(142, 202, 230, 0.2);
+    box-shadow: 0 4px 24px 0 rgba(29, 53, 87, 0.04);
+  }
+
+  /* Elegant dark card - Turquin */
+  .dark-card {
+    background: linear-gradient(135deg, hsl(var(--turquin)) 0%, hsl(216 54% 16%) 100%);
+    @apply text-white;
+  }
+
+  /* Section fold animation */
+  .section-fold {
+    @apply transition-all duration-700 ease-out;
+    transform-origin: top center;
+  }
+
+  .section-fold.folded {
+    transform: perspective(1000px) rotateX(-5deg) scale(0.95);
+    opacity: 0.3;
+    filter: blur(2px);
+  }
+
+  .section-fold.active {
+    transform: perspective(1000px) rotateX(0deg) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  /* Floating animation */
+  .float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .float-delayed {
+    animation: float 8s ease-in-out infinite 3s;
+  }
+
+  .float-slow {
+    animation: float 12s ease-in-out infinite 1.5s;
+  }
+
+  /* Gradient text - Cérulé to Turquin */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--cerule)) 0%, hsl(var(--turquin)) 100%);
+  }
+
+  /* Hover glow effect - Cérulé */
+  .hover-glow {
+    @apply transition-all duration-500;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 40px rgba(142, 202, 230, 0.3);
+  }
+
+  /* Icon container - Cérulé gradient */
+  .icon-container {
+    @apply w-12 h-12 rounded-xl flex items-center justify-center;
+    background: linear-gradient(135deg, hsl(var(--cerule)) 0%, hsl(var(--sagace)) 100%);
+    box-shadow: 0 4px 16px rgba(142, 202, 230, 0.25);
+  }
+
+  /* Blur overlay for hero - Nordique */
+  .blur-overlay {
+    @apply absolute inset-0;
+    background: linear-gradient(180deg, rgba(232, 244, 248, 0.9) 0%, rgba(245, 230, 211, 0.85) 100%);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Bubble animations - Cérulé */
+  .bubble {
+    @apply absolute rounded-full;
+    background: linear-gradient(135deg, rgba(142, 202, 230, 0.2) 0%, rgba(245, 230, 211, 0.15) 100%);
+    border: 1px solid rgba(142, 202, 230, 0.25);
+    backdrop-filter: blur(8px);
+  }
+
+  .bubble-rise {
+    animation: bubbleRise 15s ease-in-out infinite;
+  }
+
+  .bubble-float {
+    animation: bubbleFloat 10s ease-in-out infinite;
+  }
+
+  /* Shimmer effect */
+  .shimmer {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  /* Accent line - Sagace warm */
+  .golden-line {
+    @apply h-px w-16;
+    background: linear-gradient(90deg, transparent 0%, hsl(var(--sagace)) 50%, transparent 100%);
+  }
+}
+
+@layer utilities {
+
+  /* Reveal animations */
+  .reveal-up {
+    @apply opacity-0 translate-y-6;
+    animation: revealUp 0.7s ease-out forwards;
+  }
+
+  .reveal-up-delay-1 {
+    animation-delay: 0.1s;
+  }
+
+  .reveal-up-delay-2 {
+    animation-delay: 0.2s;
+  }
+
+  .reveal-up-delay-3 {
+    animation-delay: 0.3s;
+  }
+
+  .reveal-up-delay-4 {
+    animation-delay: 0.4s;
+  }
+
+  /* Stagger children */
+  .stagger-children>* {
+    @apply opacity-0;
+    animation: revealUp 0.5s ease-out forwards;
+  }
+
+  .stagger-children>*:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  .stagger-children>*:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .stagger-children>*:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  .stagger-children>*:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+
+  .stagger-children>*:nth-child(5) {
+    animation-delay: 0.5s;
+  }
+
+  /* Text sizes - refined */
+  .text-display {
+    @apply text-3xl sm:text-4xl md:text-5xl;
+  }
+
+  .text-headline {
+    @apply text-2xl sm:text-3xl md:text-4xl;
+  }
+
+  .text-title {
+    @apply text-lg sm:text-xl;
+  }
+
+  .text-body {
+    @apply text-sm leading-relaxed;
+  }
+
+  .text-caption {
+    @apply text-xs;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
+
+@keyframes revealUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bubbleRise {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.4;
+  }
+
+  25% {
+    transform: translateY(-30px) translateX(10px) scale(1.05);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-50px) translateX(-5px) scale(0.95);
+    opacity: 0.5;
+  }
+
+  75% {
+    transform: translateY(-25px) translateX(15px) scale(1.02);
+    opacity: 0.6;
+  }
+}
+
+@keyframes bubbleFloat {
+
+  0%,
+  100% {
+    transform: translateX(0) translateY(0);
+    opacity: 0.3;
+  }
+
+  33% {
+    transform: translateX(20px) translateY(-15px);
+    opacity: 0.5;
+  }
+
+  66% {
+    transform: translateX(-10px) translateY(-25px);
+    opacity: 0.4;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-soft {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Scroll-triggered animations */
+.animate-on-scroll {
+  @apply opacity-0 translate-y-8 transition-all duration-700 ease-out;
+}
+
+.animate-on-scroll.visible {
+  @apply opacity-100 translate-y-0;
+}
