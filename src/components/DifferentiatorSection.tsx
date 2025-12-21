@@ -15,7 +15,7 @@ const differentiators: Differentiator[] = [
   {
     icon: Brain,
     title: 'Data Intelligence',
-    tagline: 'Data-driven Intelligence',
+    tagline: 'Data Driven Intelligence',
   },
   {
     customIcon: diyIcon,
