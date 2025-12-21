@@ -14,7 +14,7 @@ interface Differentiator {
 const differentiators: Differentiator[] = [
   {
     icon: Brain,
-    title: 'Data Intelligence',
+    title: 'Data Driven Intelligence',
     tagline: 'Data Driven Intelligence',
   },
   {
