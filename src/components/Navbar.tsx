@@ -44,7 +44,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+      className={`relative z-50 transition-all duration-500 ${isScrolled
         ? 'py-2.5 glass-card-strong'
         : 'py-4 bg-transparent'
         }`}
