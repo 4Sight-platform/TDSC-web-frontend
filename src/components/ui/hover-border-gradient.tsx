@@ -1,97 +1,75 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-
-type Direction = "TOP" | "LEFT" | "BOTTOM" | "RIGHT";
 
 export function HoverBorderGradient({
     children,
     containerClassName,
     className,
     as: Tag = "button",
-    duration = 1,
-    clockwise = true,
     ...props
 }: React.PropsWithChildren<
     {
         as?: React.ElementType;
         containerClassName?: string;
         className?: string;
-        duration?: number;
-        clockwise?: boolean;
     } & React.HTMLAttributes<HTMLElement>
 >) {
     const [hovered, setHovered] = useState<boolean>(false);
-    const [direction, setDirection] = useState<Direction>("TOP");
-
-    const rotateDirection = (currentDirection: Direction): Direction => {
-        const directions: Direction[] = ["TOP", "LEFT", "BOTTOM", "RIGHT"];
-        const currentIndex = directions.indexOf(currentDirection);
-        const nextIndex = clockwise
-            ? (currentIndex - 1 + directions.length) % directions.length
-            : (currentIndex + 1) % directions.length;
-        return directions[nextIndex];
-    };
-
-    const movingMap: Record<Direction, string> = {
-        TOP: "radial-gradient(20.7% 50% at 50% 0%, hsl(197, 62%, 72%) 0%, rgba(255, 255, 255, 0) 100%)",
-        LEFT: "radial-gradient(16.6% 43.1% at 0% 50%, hsl(197, 62%, 72%) 0%, rgba(255, 255, 255, 0) 100%)",
-        BOTTOM:
-            "radial-gradient(20.7% 50% at 50% 100%, hsl(197, 62%, 72%) 0%, rgba(255, 255, 255, 0) 100%)",
-        RIGHT:
-            "radial-gradient(16.2% 41.199999999999996% at 100% 50%, hsl(197, 62%, 72%) 0%, rgba(255, 255, 255, 0) 100%)",
-    };
-
-    const highlight =
-        "radial-gradient(75% 181.15942028985506% at 50% 50%, hsl(197, 62%, 72%) 0%, rgba(255, 255, 255, 0) 100%)";
-
-    useEffect(() => {
-        if (!hovered) {
-            const interval = setInterval(() => {
-                setDirection((prevState) => rotateDirection(prevState));
-            }, duration * 1000);
-            return () => clearInterval(interval);
-        }
-    }, [hovered, duration, clockwise]);
 
     return (
         <Tag
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             className={cn(
-                "relative flex rounded-full border content-center bg-black/5 hover:bg-black/10 transition duration-500 dark:bg-white/20 items-center flex-col flex-nowrap gap-10 h-min justify-center overflow-visible p-px decoration-clone w-fit",
+                "relative flex rounded-full border border-transparent content-center bg-transparent items-center flex-col flex-nowrap h-min justify-center overflow-visible p-px w-fit group",
                 containerClassName
             )}
             {...props}
         >
+            {/* Inner content */}
             <div
                 className={cn(
-                    "w-auto text-black z-10 bg-white px-6 py-2.5 rounded-[inherit] font-medium text-sm",
+                    "w-auto text-black z-10 bg-white px-6 py-2.5 rounded-[inherit] font-medium text-sm transition-all duration-300 group-hover:bg-gray-50",
                     className
                 )}
             >
                 {children}
             </div>
+
+            {/* Subtle border that appears on hover */}
             <motion.div
-                className={cn(
-                    "flex-none inset-0 overflow-hidden absolute z-0 rounded-[inherit]"
-                )}
-                style={{
-                    filter: "blur(2px)",
-                    position: "absolute",
-                    width: "100%",
-                    height: "100%",
-                }}
-                initial={{ background: movingMap[direction] }}
+                className="absolute inset-0 rounded-[inherit] z-0"
+                initial={{ opacity: 0 }}
                 animate={{
-                    background: hovered
-                        ? [movingMap[direction], highlight]
-                        : movingMap[direction],
+                    opacity: hovered ? 1 : 0,
                 }}
-                transition={{ ease: "linear", duration: duration ?? 1 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                style={{
+                    background: "linear-gradient(135deg, hsl(197, 62%, 72%) 0%, hsl(38, 45%, 91%) 50%, hsl(197, 62%, 72%) 100%)",
+                    padding: "1px",
+                    borderRadius: "inherit",
+                }}
             />
-            <div className="bg-white absolute z-1 flex-none inset-[2px] rounded-[100px]" />
+
+            {/* Soft glow effect on hover */}
+            <motion.div
+                className="absolute inset-0 rounded-[inherit] z-[-1]"
+                initial={{ opacity: 0, scale: 1 }}
+                animate={{
+                    opacity: hovered ? 0.4 : 0,
+                    scale: hovered ? 1.05 : 1,
+                }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                style={{
+                    background: "radial-gradient(circle, hsl(197, 62%, 72%) 0%, transparent 70%)",
+                    filter: "blur(12px)",
+                }}
+            />
+
+            {/* White background to cover the gradient border inside */}
+            <div className="bg-white absolute z-[1] inset-[1px] rounded-[inherit] group-hover:bg-gray-50 transition-colors duration-300" />
         </Tag>
     );
 }

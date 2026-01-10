@@ -1,24 +1,31 @@
-import { FileSearch, Cpu, GraduationCap, ArrowRight } from 'lucide-react';
+import { FileSearch, Cpu, GraduationCap, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
-import { BackgroundGradient } from '@/components/ui/background-gradient';
+import { GlowCard } from '@/components/ui/GlowCard';
 import AnimatedSection from './AnimatedSection';
 import { useParallax } from '@/hooks/useParallax';
+import { motion } from 'framer-motion';
 
 const services = [
   {
     icon: FileSearch,
     title: 'Due Diligence',
-    description: 'Uncover risks and opportunities in your data journey.',
+    description: 'Uncover risks and opportunities in your data journey with comprehensive analysis.',
+    features: ['Risk Assessment', 'Data Quality Audit', 'Compliance Check'],
+    color: 'cerule',
   },
   {
     icon: Cpu,
     title: 'AI Assessment',
-    description: 'Evaluate AI readiness.',
+    description: 'Evaluate your organization\'s AI readiness and create a roadmap for success.',
+    features: ['Readiness Score', 'Gap Analysis', 'Implementation Plan'],
+    color: 'turquin',
   },
   {
     icon: GraduationCap,
     title: 'AI Training',
-    description: 'Equip your team effectively in AI.',
+    description: 'Equip your team with cutting-edge AI skills and practical knowledge.',
+    features: ['Custom Curriculum', 'Hands-on Labs', 'Certification'],
+    color: 'sagace',
   },
 ];
 
@@ -26,89 +33,164 @@ const ServicesSection = () => {
   const parallaxOffset = useParallax(0.18);
 
   return (
-    <AnimatedSection id="services" className="py-20 md:py-28 relative overflow-hidden bg-muted/30">
+    <AnimatedSection id="services" className="py-24 md:py-32 relative overflow-hidden">
+      {/* Rich colorful gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-turquin/60 via-cerule/50 to-turquin/70" />
+      <div className="absolute inset-0 bg-gradient-to-t from-turquin/50 via-cerule/30 to-turquin/40" />
+
       {/* Parallax background pattern */}
-      <div
-        className="absolute inset-0 opacity-30"
+      <motion.div
+        className="absolute inset-0 opacity-20"
         style={{ transform: `translateY(${parallaxOffset * 0.5}px)` }}
       >
         <div className="absolute top-0 left-0 w-full h-full"
           style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, hsl(var(--primary) / 0.1) 0%, transparent 50%),
-                             radial-gradient(circle at 75% 75%, hsl(var(--accent) / 0.08) 0%, transparent 50%)`,
+            backgroundImage: `radial-gradient(circle at 25% 25%, hsl(var(--primary) / 0.15) 0%, transparent 50%),
+                             radial-gradient(circle at 75% 75%, hsl(var(--accent) / 0.12) 0%, transparent 50%)`,
           }}
         />
-      </div>
+      </motion.div>
+
+      {/* Decorative geometric shapes */}
+      <motion.div
+        className="absolute top-20 right-10 w-32 h-32 border border-cerule/20 rounded-2xl hidden lg:block"
+        animate={{ rotate: [0, 90, 180, 270, 360] }}
+        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+      />
+      <motion.div
+        className="absolute bottom-20 left-10 w-24 h-24 border border-sagace/30 rounded-full hidden lg:block"
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
 
       {/* Parallax bubbles */}
-      <div
-        className="bubble w-24 h-24 top-20 right-[18%] bubble-float opacity-40 hidden lg:block"
+      <motion.div
+        className="bubble w-24 h-24 top-20 right-[18%] hidden lg:block"
         style={{ transform: `translateY(${parallaxOffset}px)` }}
+        animate={{ opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 4, repeat: Infinity }}
       />
-      <div
-        className="bubble w-16 h-16 bottom-28 left-[12%] bubble-rise opacity-30 hidden lg:block"
-        style={{ transform: `translateY(${parallaxOffset * 0.8}px)`, animationDelay: '2s' }}
+      <motion.div
+        className="bubble w-16 h-16 bottom-28 left-[12%] hidden lg:block"
+        style={{ transform: `translateY(${parallaxOffset * 0.8}px)` }}
+        animate={{ opacity: [0.2, 0.4, 0.2] }}
+        transition={{ duration: 5, repeat: Infinity, delay: 1 }}
       />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <div className="golden-line mx-auto mb-5" />
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-white mb-4">
             We Also{' '}
-            <span className="gradient-text">Provide</span>
+            <span className="text-sagace">Provide</span>
           </h2>
-          <p className="text-base md:text-lg text-foreground/70">
-            Specialized services for your transformation journey.
+          <p className="text-lg text-white/80">
+            Specialized services for your transformation journey
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {services.map((service, index) => (
-            <div
+            <motion.div
               key={service.title}
-              className="group relative animate-on-scroll h-full"
-              style={{ animationDelay: `${index * 100}ms` }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.15 }}
+              className="h-full"
             >
-              <BackgroundGradient className="rounded-[22px] bg-white dark:bg-zinc-900 p-6 sm:p-8 h-full min-h-[280px] flex flex-col">
-                {/* Icon */}
-                <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-xl bg-primary/15 flex items-center justify-center mb-5 group-hover:bg-primary group-hover:scale-105 transition-all duration-300">
-                  <service.icon
-                    className="w-7 h-7 lg:w-8 lg:h-8 text-primary group-hover:text-primary-foreground transition-colors duration-300"
-                    strokeWidth={1.5}
-                  />
+              <GlowCard
+                className="h-full"
+                glowColor={`hsl(var(--${service.color === 'cerule' ? 'primary' : service.color === 'turquin' ? 'foreground' : 'secondary'}))`}
+                hoverScale={1.03}
+              >
+                <div className="p-8 lg:p-10 h-full flex flex-col">
+                  {/* Icon with animated background */}
+                  <motion.div
+                    className="relative w-16 h-16 lg:w-20 lg:h-20 mb-6"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-cerule/20 to-sagace/20 rounded-2xl" />
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-br from-cerule to-turquin rounded-2xl opacity-0"
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <service.icon
+                        className="w-8 h-8 lg:w-10 lg:h-10 text-turquin"
+                        strokeWidth={1.5}
+                      />
+                    </div>
+                  </motion.div>
+
+                  {/* Content */}
+                  <h3 className="text-xl lg:text-2xl font-serif text-foreground mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-sm lg:text-base text-foreground/70 mb-6 flex-grow">
+                    {service.description}
+                  </p>
+
+                  {/* Feature list */}
+                  <div className="space-y-2 mb-6">
+                    {service.features.map((feature, i) => (
+                      <motion.div
+                        key={feature}
+                        className="flex items-center gap-2 text-sm text-foreground/80"
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 + i * 0.1 }}
+                      >
+                        <CheckCircle2 className="w-4 h-4 text-cerule flex-shrink-0" />
+                        <span>{feature}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* CTA */}
+                  <motion.button
+                    className="text-sm text-turquin hover:text-cerule transition-colors flex items-center gap-2 group font-medium mt-auto"
+                    whileHover={{ x: 4 }}
+                  >
+                    Learn more
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </motion.button>
                 </div>
-
-                {/* Content */}
-                <h3 className="text-xl lg:text-2xl font-serif text-foreground mb-2">
-                  {service.title}
-                </h3>
-                <p className="text-sm lg:text-base text-foreground/70 mb-5 flex-grow">
-                  {service.description}
-                </p>
-
-                {/* CTA */}
-                <button className="text-sm text-black hover:text-black/70 transition-colors flex items-center gap-2 group/btn font-medium mt-auto">
-                  Learn more
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </button>
-              </BackgroundGradient>
-            </div>
+              </GlowCard>
+            </motion.div>
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <div className="flex justify-center mt-20">
+        <motion.div
+          className="flex justify-center mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
           <HoverBorderGradient
             containerClassName="rounded-full"
             as="button"
             className="bg-white text-black flex items-center space-x-2"
           >
             <span>Get in Touch</span>
+            <ArrowRight className="w-4 h-4" />
           </HoverBorderGradient>
-        </div>
+        </motion.div>
       </div>
     </AnimatedSection>
   );
 };
 
 export default ServicesSection;
+
